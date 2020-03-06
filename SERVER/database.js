@@ -1,5 +1,6 @@
 const mssql = require('mssql');
 
+//configuracion de acceso base de datos
 const URI = {
     server: "DESKTOP-CH2O21Q\\SQLEXPRESS",
     database: "ActivityLogs",
@@ -8,9 +9,9 @@ const URI = {
     port: 1433
 };
 
+//conexion base de datos
 mssql.connect(URI)
   .then(db => console.log('DB is connected'))
   .catch(err => console.error(err));
 
 module.exports = mssql;
-

@@ -13,11 +13,12 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors({origin: 'http://localhost:4200'}));
 
+//Routes
+app.use(require('./routes/binnacle_r'));
+app.use(require('./routes/operator_r'));
 
 // Starting server
 app.listen(app.get('port'), () => {
     console.log('Server on port', app.get('port'));
 
 });
-
-
