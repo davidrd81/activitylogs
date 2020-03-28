@@ -17,7 +17,7 @@ const getUsers = (req, res) => {
 };
 
 //GET API by Id
-const getUser = (req, res) => {
+const getUserById = (req, res) => {
     var query = "select * from [Operator] WHERE Id=" + req.params.id;
     executeQuery (res, query);
 };
@@ -43,7 +43,7 @@ const deleteUser = (req, res) => {
 
 module.exports = {
     getUsers,
-    getUser,
+    getUserById,
     createUser,
     editUser,
     deleteUser
