@@ -2,7 +2,7 @@ const mssql = require('mssql');
 
 //configuracion de acceso base de datos
 const URI = {
-    server: "DESKTOP-CH2O21Q\\SQLEXPRESS",
+    server: "LOCALHOST\\SQLEXPRESS",
     database: "ActivityLogs",
     user: "admin",
     password: "Administrador2020",

@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { BinnacleComponent } from './components/binnacle/binnacle.component';
 import { OperatorsComponent } from './components/operators/operators.component';
 import { HomeComponent } from './components/home/home.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BinnacleComponent,
     OperatorsComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
