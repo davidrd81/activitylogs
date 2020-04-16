@@ -21,9 +21,15 @@ const getUsers = (req, res) => {
 
 //GET API by Id
 const getUserById = async(req, res) => {
-    const {id} = req.params
+    try{
+    const {id} = req.params;
     const query = `select * from [Operator] WHERE id = ${id}`;
-    executeQuery(res, query);
+    // create Request object
+    const request = new sql.Request();
+    // query to the database
+    const result = await request.query(query);
+        res.json(result.recordset[0]);
+    }catch(error){console.log(`se produce el siguiente error:${error}`)}
 };
 
 //POST API
