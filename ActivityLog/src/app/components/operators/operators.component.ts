@@ -20,20 +20,22 @@ export class OperatorsComponent implements OnInit {
   }
 
   addOperator(form?: NgForm) {
-    console.log(form.value);
     if (form.value.Id) {
       this.operatorService.putOperator(form.value)
       .subscribe(res => {console.log(res);
       });
-    } else {
+      } else {
         this.operatorService.postOperator(form.value)
         .subscribe(res => {
           this.resetForm(form);
           M.toast({html: 'save succesfully'});
           this.getOperator();
         });
-        }
-  }
+      }
+    }
+
+
+
 
   getOperator() {
     this.operatorService.getOperator()

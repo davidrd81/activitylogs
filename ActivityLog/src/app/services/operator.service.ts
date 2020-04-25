@@ -18,6 +18,11 @@ export class OperatorService {
     return this.http.get(this.URL_API);
   }
 
+  editOperator(Id: number) {
+    console.log(this.http.get(this.URL_API + `/${Id}`));
+    return this.http.get(this.URL_API + `/${Id}`);
+  }
+
   postOperator(Operators: Operator) {
     console.log('servicios', Operators);
     return this.http.post(this.URL_API, Operators);
