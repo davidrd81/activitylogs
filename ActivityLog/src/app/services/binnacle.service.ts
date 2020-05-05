@@ -7,7 +7,7 @@ import { Binnacle } from '../models/binnacle';
 })
 export class BinnacleService {SelectedBinnacle: Binnacle;
   Binnacle: Binnacle[];
-  readonly URL_API = 'http://localhost:3000/api/Binnacle';
+  readonly URL_API = 'http://localhost:3000/api/Binnacles';
 
   constructor(private http: HttpClient) {
     this.SelectedBinnacle = new Binnacle();

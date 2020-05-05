@@ -1,65 +1,44 @@
-<p>binnacle works!</p>
-<div class="container">
-    <div class="row">
-        <form #binnacleForm="ngForm" (ngSubmit)="addBinnacle(binnacleForm)">
-            <div>
-                <div>
-                    <input type="hidden" name="Id" #Id="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id" placeholder="ingrese su cedula">
-                </div>
-                <div>
-                    <input type="number" name="Id_LastOperator" #Id_LastOperator="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_LastOperator" placeholder="ingrese su cedula">
-                </div>
-                <div>
-                    <input type="text" name="Id_NewOperator" #Id_NewOperator="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_NewOperator" placeholder="ingrese su nombre">
-                </div>
-                <div>
-                    <input type="text" name="News" #News="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.News" placeholder="ingrese su apellido">
-                </div>
-                <div>
-                    <input type="email" name="SpecialProcess" #SpecialProcess="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.SpecialProcess" placeholder="ingrese su email">
-                </div>
-                <div>
-                    <input type="text" name="PendingProcess" #PendingProcess="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.PendingProcess" placeholder="ingrese su nombre de usuario">
-                </div>
-                <div>
-                    <input type="text" name="Id_Schedule" #Id_Schedule="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_Schedule" placeholder="ingrese su area">
-                </div>
-            </div>
-            <div class="card-action">
-                <div class="input-field-append">
-                    <button class="btn-primary btn">Guardar</button>
-                    <button class="btn-primary btn" (click)="resetForm(binnacleForm)">Limpiar</button>
-                </div>
-        </div>
-        </form>
-    </div>
-</div>
-<div class="col-md-4">
-    <table>
-        <thead>
-            <th>CC</th>
-            <th>FirtsName</th>
-            <th>LastName</th>
-            <th>Email</th>
-            <th>UserName</th>
-        </thead>
-        <tbody>
-        <tr *ngFor="let binnacle of binnacleService.Binnacle">
-            <td>{{ binnacle.Id_LastOperator }}</td>
-            <td>{{ binnacle.Id_NewOperator }}</td>
-            <td>{{ binnacle.News }}</td>
-            <td>{{ binnacle.SpecialProcess }}</td>
-            <td>{{ binnacle.PendingProcess }}</td>
-            <td>
+
+<div><button mat-flat-button color="primary" (click)="openDialog()">CREAR BITACORA</button></div>
+    <table mat-table [dataSource]="binnacleService.Binnacle">
+        <ng-container matColumnDef='operador'>
+            <th mat-header-cell *matHeaderCellDef>operador</th>
+            <td mat-cell *matCellDef="let binnacle">{{ binnacle.FirstName[0] }} {{ binnacle.LastName[0] }}</td>
+        </ng-container>
+        <ng-container matColumnDef='Schedule'>
+            <th mat-header-cell *matHeaderCellDef>Turno</th>
+            <td mat-cell *matCellDef="let binnacle">{{ binnacle.Schedule }}</td>
+        </ng-container>
+        <ng-container matColumnDef='News'>
+            <th mat-header-cell *matHeaderCellDef>Noticias</th>
+            <td mat-cell *matCellDef="let binnacle">{{ binnacle.News }}</td>
+        </ng-container>
+        <ng-container matColumnDef='SpecialProcess'>
+            <th mat-header-cell *matHeaderCellDef>Procesos especiales</th>
+            <td mat-cell *matCellDef="let binnacle">{{ binnacle.SpecialProcess }}</td>
+        </ng-container>
+        <ng-container matColumnDef='PendingProcess'>
+            <th mat-header-cell *matHeaderCellDef>Procesos pendientes</th>
+            <td mat-cell *matCellDef="let binnacle">{{ binnacle.PendingProcess }}</td>
+        </ng-container>
+        <ng-container matColumnDef='bottom_edit'>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let binnacle">
                 <a (click)="editBinnacle(binnacle.Id)" style="cursor:pointer">
                     <i class="material-icons">edit</i>
                 </a>
             </td>
-            <td>
+        </ng-container>
+        <ng-container matColumnDef='bottom_delete'>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let binnacle">
                 <a (click)="deleteBinnacle(binnacle.Id)" style="cursor:pointer">
                     <i class="material-icons uk-icon-hand-pointer-o">delete</i>
                 </a>
             </td>
-        </tr>
+        </ng-container>
+        <tbody>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </tbody>
     </table>

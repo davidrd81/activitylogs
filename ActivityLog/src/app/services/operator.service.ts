@@ -10,7 +10,7 @@ export class OperatorService {
   Operator: Operator[];
   readonly URL_API = 'http://localhost:3000/api/operator';
 
-  constructor(private http: HttpClient) {
+  constructor(public http: HttpClient) {
     this.SelectedOperator = new Operator();
   }
 

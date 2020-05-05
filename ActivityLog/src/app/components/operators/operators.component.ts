@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { OperatorService } from '../../services/operator.service';
 import { Operator } from 'src/app/models/operator';
+import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { FormoperatorComponent } from '../formoperator/formoperator.component';
 
 declare var M: any;
 
@@ -13,10 +15,16 @@ declare var M: any;
 
 })
 export class OperatorsComponent implements OnInit {
-  constructor(public operatorService: OperatorService) {}
+  NewRegOper = false;
+    // tabla
+    displayedColumns: string[] = ['CC', 'FirtsName', 'LastName', 'Email', 'UserName', 'bottom_edit', 'bottom_delete'];
+    dataSource: Operator;
+  constructor(
+    public operatorService: OperatorService,
+    private dialog: MatDialog,
+    ) {}
   ngOnInit() {
     this.getOperator();
-    console.log(OperatorService);
   }
 
   addOperator(form?: NgForm) {
@@ -34,8 +42,9 @@ export class OperatorsComponent implements OnInit {
       }
     }
 
-
-
+  openDialog() {
+      this.dialog.open(FormoperatorComponent);
+    }
 
   getOperator() {
     this.operatorService.getOperator()
@@ -65,5 +74,4 @@ deleteOperator(Id: number) {
     });
   }
 }
-
 }

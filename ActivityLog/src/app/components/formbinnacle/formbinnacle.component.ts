@@ -2,38 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BinnacleService } from '../../services/binnacle.service';
 import { Binnacle } from 'src/app/models/binnacle';
-import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { FormbinnacleComponent } from '../formbinnacle/formbinnacle.component';
 
-declare var M: any;
+// declaracion de variables
+declare let M: any;
 
 @Component({
-  selector: 'app-binnacle',
-  templateUrl: './binnacle.component.html',
-  styleUrls: ['./binnacle.component.css'],
+  selector: 'app-formbinnacle',
+  templateUrl: './formbinnacle.component.html',
+  styleUrls: ['./formbinnacle.component.css'],
   providers: [BinnacleService],
 })
-export class BinnacleComponent implements OnInit {
-  // TABLA
-  displayedColumns: string[] = ['operador', 'Schedule', 'News', 'SpecialProcess', 'PendingProcess', 'bottom_edit', 'bottom_delete'];
-  dataSource: Binnacle;
+export class FormbinnacleComponent implements OnInit {
+
   constructor(
     public binnacleService: BinnacleService,
-    private dialog: MatDialog,
-    ) {}
-  ngOnInit() {
-    this.getBinnacle();
+  ) { }
+
+  ngOnInit(): void {
   }
 
-  openDialog() {
-    this.dialog.open(FormbinnacleComponent);
-  }
-
-addBinnacle(form?: NgForm) {
+  addBinnacle(form?: NgForm) {
     if (form.value.Id) {
       this.binnacleService.putBinnacle(form.value)
       .subscribe(res => {console.log(res);
-      });
+      }); 
     } else {
       this.binnacleService.postBinnacle(form.value)
         .subscribe(res => {
@@ -44,7 +36,7 @@ addBinnacle(form?: NgForm) {
         }
   }
 
-getBinnacle() {
+  getBinnacle() {
     this.binnacleService.getBinnacle()
     .subscribe(res => {
       this.binnacleService.Binnacle = res as Binnacle[];
@@ -63,13 +55,4 @@ editBinnacle(binnacle: Binnacle) {
     this.binnacleService.SelectedBinnacle = binnacle;
   }
 
-// tslint:disable-next-line: variable-name
-deleteBinnacle(Id: number) {
-    if (confirm ('are you sure you want to delete it?')) {
-      this.binnacleService.deleteBinnacle(Id)
-      .subscribe(res => {
-      this.getBinnacle();
-    });
-  }
-  }
 }

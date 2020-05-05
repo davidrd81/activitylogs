@@ -1,61 +1,49 @@
-        <div class="container">
-            <div class="row">
-                <form #operatorForm="ngForm" (ngSubmit)="addOperator(operatorForm)">
-                    <div>
-                        <div>
-                            <input type="number" name="CC" #CC="ngModel" [(ngModel)]="operatorService.SelectedOperator.CC" placeholder="ingrese su cedula">
-                        </div>
-                        <div>
-                            <input type="text" name="FirstName" #FirstName="ngModel" [(ngModel)]="operatorService.SelectedOperator.FirstName" placeholder="ingrese su nombre">
-                        </div>
-                        <div>
-                            <input type="text" name="LastName" #LastName="ngModel" [(ngModel)]="operatorService.SelectedOperator.LastName" placeholder="ingrese su apellido">
-                        </div>
-                        <div>
-                            <input type="email" name="Email" #Email="ngModel" [(ngModel)]="operatorService.SelectedOperator.Email" placeholder="ingrese su email">
-                        </div>
-                        <div>
-                            <input type="text" name="UserName" #UserName="ngModel" [(ngModel)]="operatorService.SelectedOperator.UserName" placeholder="ingrese su nombre de usuario">
-                        </div>
-                        <div>
-                            <input type="text" name="Id_Area" #Id_Area="ngModel" [(ngModel)]="operatorService.SelectedOperator.Id_Area" placeholder="ingrese su area">
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <div class="input-field-append">
-                            <button class="btn-primary btn">Guardar</button>
-                            <button class="btn-primary btn" (click)="resetForm(operatorForm)">Limpiar</button>
-                        </div>
-                </div>
-                </form>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <table>
-                <thead>
-                    <th>CC</th>
-                    <th>FirtsName</th>
-                    <th>LastName</th>
-                    <th>Email</th>
-                    <th>UserName</th>
-                </thead>
-                <tbody>
-                <tr *ngFor="let operator of operatorService.Operator">
-                    <td>{{ operator.CC }}</td>
-                    <td>{{ operator.FirstName }}</td>
-                    <td>{{ operator.LastName }}</td>
-                    <td>{{ operator.Email }}</td>
-                    <td>{{ operator.UserName }}</td>
-                    <td>
-                        <a (click)="editOperator(operator.Id)" style="cursor:pointer">
-                            <i class="material-icons">edit</i>
-                        </a>
-                    </td>
-                    <td>
-                        <a (click)="deleteOperator(operator.Id)" style="cursor:pointer">
-                            <i class="material-icons uk-icon-hand-pointer-o">delete</i>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<div>
+    <li>
+        <button mat-raised-button (click)="openDialog()">registrar operador</button>
+      </li>
+</div>
+<div>
+<table mat-table [dataSource]="operatorService.Operator">
+    <ng-container matColumnDef="CC">
+        <th mat-header-cell *matHeaderCellDef>CC</th>
+        <td mat-cell *matCellDef="let operator">{{ operator.CC }}</td>
+    </ng-container>
+    <ng-container matColumnDef="FirtsName">
+        <th mat-header-cell *matHeaderCellDef>FirtsName</th>
+        <td mat-cell *matCellDef="let operator">{{ operator.FirstName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="LastName">
+        <th mat-header-cell *matHeaderCellDef>LastName</th>
+        <td mat-cell *matCellDef="let operator">{{ operator.LastName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let operator">{{ operator.Email }}</td>
+    </ng-container>
+    <ng-container matColumnDef="UserName">
+        <th mat-header-cell *matHeaderCellDef>UserName</th>
+        <td mat-cell *matCellDef="let operator">{{ operator.UserName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="bottom_edit">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let operator">
+        <a (click)="editOperator(operator)" style="cursor:pointer">
+            <i class="material-icons">edit</i>
+        </a>
+    </td>
+</ng-container>
+    <ng-container matColumnDef="bottom_delete">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let operator">
+        <a (click)="deleteOperator(operator.Id)" style="cursor:pointer">
+            <i class="material-icons uk-icon-hand-pointer-o">delete</i>
+        </a>
+    </td>
+</ng-container>
+    <tbody>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </tbody>
+</table>
+</div>

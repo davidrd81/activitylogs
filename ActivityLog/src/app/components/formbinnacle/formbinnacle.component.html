@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <form #binnacleForm="ngForm" (ngSubmit)="addBinnacle(binnacleForm)">
+            <div>
+                <div>
+                    <input type="hidden" name="Id" #Id="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id" placeholder="ingrese su cedula">
+                </div>
+                <div>
+                    <input type="number" name="Id_LastOperator" #Id_LastOperator="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_LastOperator" placeholder="ingrese su cedula">
+                </div>
+                <div>
+                    <input type="text" name="Id_NewOperator" #Id_NewOperator="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_NewOperator" placeholder="ingrese su nombre">
+                </div>
+                <div>
+                    <input type="text" name="News" #News="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.News" placeholder="ingrese su apellido">
+                </div>
+                <div>
+                    <input type="email" name="SpecialProcess" #SpecialProcess="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.SpecialProcess" placeholder="ingrese su email">
+                </div>
+                <div>
+                    <input type="text" name="PendingProcess" #PendingProcess="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.PendingProcess" placeholder="ingrese su nombre de usuario">
+                </div>
+                <div>
+                    <input type="text" name="Id_Schedule" #Id_Schedule="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_Schedule" placeholder="ingrese su area">
+                </div>
+            </div>
+            <div class="card-action">
+                <div class="input-field-append">
+                    <button class="btn-primary btn">Guardar</button>
+                    <button class="btn-primary btn" (click)="resetForm(binnacleForm)">Limpiar</button>
+                </div>
+        </div>
+        </form>
+    </div>
+</div>
