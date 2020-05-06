@@ -27,7 +27,7 @@ export class OperatorsComponent implements OnInit {
     this.getOperator();
   }
 
-  addOperator(form?: NgForm) {
+  addOperator(form) {
     if (form.value.Id) {
       this.operatorService.putOperator(form.value)
       .subscribe(res => {console.log(res);
@@ -42,8 +42,15 @@ export class OperatorsComponent implements OnInit {
       }
     }
 
-  openDialog() {
-      this.dialog.open(FormoperatorComponent);
+  openDialog(): void {
+      const dialogRef = this.dialog.open(FormoperatorComponent, {
+        width: '350px',
+        height: '620px',
+        data: {operator: Operator},
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
     }
 
   getOperator() {
@@ -54,19 +61,29 @@ export class OperatorsComponent implements OnInit {
     });
   }
 
-  resetForm(form?: NgForm) {
+  resetForm(form) {
     if (form) {
       form.reset();
       this.operatorService.SelectedOperator = new Operator();
     }
   }
 
-  editOperator(operator: Operator) {
+/*  editOperator(operator: Operator) {
     this.operatorService.SelectedOperator = operator;
-}
+} */
+  editOperator(operator: Operator): void {
+    const dialogRef = this.dialog.open(FormoperatorComponent, {
+      width: '350px',
+      height: '620px',
+      data: {operator},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
 // tslint:disable-next-line: variable-name
-deleteOperator(Id: number) {
+  deleteOperator(Id: number) {
     if (confirm ('are you sure you want to delete it?')) {
       this.operatorService.deleteOperator(Id)
   .subscribe(res => {

@@ -1,21 +1,15 @@
-<nav class="navbar-dark bg-primary">
-    <div class="container">
-      <ul>
-        <li>
-          <a class="navbar-brand" [routerLink]="['home']">
-            HOME
-          </a>
-        </li>
-        <li>
-          <a class="navbar-brand" [routerLink]="['binnacle']">
-            BITACORA
-          </a>
-        </li>
-        <li>
-          <a class="navbar-brand" [routerLink]="['operators']">
-            OPERADORES
-          </a>
-        </li>
-      </ul> 
-    </div> 
-</nav>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Activity Logs</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <span class="example-spacer"></span>
+      <a class="accesos" [routerLink]="['home']">HOME</a>
+      <a class="accesos" [routerLink]="['binnacle']">BITACORA</a>
+      <a class="accesos" [routerLink]="['operators']">operators</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

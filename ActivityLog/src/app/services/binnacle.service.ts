@@ -34,5 +34,4 @@ export class BinnacleService {SelectedBinnacle: Binnacle;
   deleteBinnacle(Id: number) {
     return this.http.delete(this.URL_API + `/${Id}`);
   }
-
 }

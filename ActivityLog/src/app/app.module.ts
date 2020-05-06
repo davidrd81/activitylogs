@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import {APP_BASE_HREF} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 // Angular Material
 import { MaterialModule } from './material.module'
@@ -42,8 +43,13 @@ import { FormoperatorComponent } from './components/formoperator/formoperator.co
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    ReactiveFormsModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue : '/' }, OperatorService, BinnacleService],
+  providers: [
+    {provide: APP_BASE_HREF, useValue : '/' },
+    OperatorService, BinnacleService,
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'auto', appearance: 'outline'} },
+    ],
   bootstrap: [AppComponent],
   entryComponents: [FormbinnacleComponent, FormoperatorComponent]
 })

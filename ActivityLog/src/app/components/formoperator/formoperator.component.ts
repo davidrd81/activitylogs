@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
+import { NgForm, FormBuilder, Validators} from '@angular/forms';
 import { OperatorService } from '../../services/operator.service';
 import { Operator } from 'src/app/models/operator';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-declare var M: any;
+declare let M: any;
 
 @Component({
   selector: 'app-formoperator',
@@ -13,25 +14,42 @@ declare var M: any;
 
 })
 export class FormoperatorComponent implements OnInit {
-
+  inputData: Operator;
+  operatorForm = this.fb.group({
+    CC: [0, Validators.required],
+    FirstName: ['', Validators.required],
+    LastName: ['', Validators.required],
+    Email: ['', Validators.required],
+    UserName: ['', Validators.required],
+    Id_Area: [0, Validators.required],
+  });
   constructor(
     public operatorService: OperatorService,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<FormoperatorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Operator,
   ) { }
 
   ngOnInit(): void {
+    this.inputData = this.data['operator'];
+    console.log(this.inputData);
+    this.operatorForm.patchValue(this.inputData);
   }
 
-  addOperator(form?: NgForm) {
-    if (form.value.Id) {
-      this.operatorService.putOperator(form.value)
-      .subscribe(res => {console.log(res);
+  updateOperator() {
+    if (this.inputData.Id) {
+      this.operatorForm.value['Id'] = this.inputData.Id;
+      console.log('ingreso en el if', this.operatorForm.value  ),
+      this.operatorService.putOperator(this.operatorForm.value)
+      .subscribe(res => {console.log(res),
+        M.toast({html: 'save succesfully'});
       });
       } else {
-        this.operatorService.postOperator(form.value)
+        this.operatorService.postOperator(this.operatorForm.value)
         .subscribe(res => {
-          this.resetForm(form);
+//          this.resetForm(this.operatorForm.value);
           M.toast({html: 'save succesfully'});
-          this.getOperator();
+//          this.getOperator();
         });
       }
     }
@@ -48,5 +66,7 @@ export class FormoperatorComponent implements OnInit {
         this.operatorService.SelectedOperator = new Operator();
       }
     }
-
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
 }
