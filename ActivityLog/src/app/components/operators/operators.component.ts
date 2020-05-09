@@ -15,7 +15,6 @@ declare var M: any;
 
 })
 export class OperatorsComponent implements OnInit {
-  NewRegOper = false;
     // tabla
     displayedColumns: string[] = ['CC', 'FirtsName', 'LastName', 'Email', 'UserName', 'bottom_edit', 'bottom_delete'];
     dataSource: Operator;
@@ -26,22 +25,6 @@ export class OperatorsComponent implements OnInit {
   ngOnInit() {
     this.getOperator();
   }
-
-  addOperator(form) {
-    if (form.value.Id) {
-      this.operatorService.putOperator(form.value)
-      .subscribe(res => {console.log(res);
-      });
-      } else {
-        this.operatorService.postOperator(form.value)
-        .subscribe(res => {
-          this.resetForm(form);
-          M.toast({html: 'save succesfully'});
-          this.getOperator();
-        });
-      }
-    }
-
   openDialog(): void {
       const dialogRef = this.dialog.open(FormoperatorComponent, {
         width: '350px',
@@ -59,13 +42,6 @@ export class OperatorsComponent implements OnInit {
       this.operatorService.Operator = res as Operator[];
       console.log(res);
     });
-  }
-
-  resetForm(form) {
-    if (form) {
-      form.reset();
-      this.operatorService.SelectedOperator = new Operator();
-    }
   }
 
 /*  editOperator(operator: Operator) {

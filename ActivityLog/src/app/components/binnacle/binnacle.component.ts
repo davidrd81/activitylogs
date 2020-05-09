@@ -26,7 +26,14 @@ export class BinnacleComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(FormbinnacleComponent);
+    const dialogRef = this.dialog.open(FormbinnacleComponent, {
+      width: '500px',
+      height: '800px',
+      data: {binnacle: Binnacle},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 addBinnacle(form?: NgForm) {
@@ -59,12 +66,20 @@ resetForm(form?: NgForm) {
     }
   }
 
-editBinnacle(binnacle: Binnacle) {
-    this.binnacleService.SelectedBinnacle = binnacle;
+
+  editBinnacle(binnacle: Binnacle): void {
+    const dialogRef = this.dialog.open(FormbinnacleComponent, {
+      width: '350px',
+      height: '620px',
+      data: {binnacle},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 // tslint:disable-next-line: variable-name
-deleteBinnacle(Id: number) {
+  deleteBinnacle(Id: number) {
     if (confirm ('are you sure you want to delete it?')) {
       this.binnacleService.deleteBinnacle(Id)
       .subscribe(res => {

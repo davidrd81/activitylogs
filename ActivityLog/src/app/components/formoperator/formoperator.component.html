@@ -31,8 +31,12 @@
                 </p>
                 <p>
                     <mat-form-field>
-                    <mat-label>Area</mat-label>
-                    <input matInput type="text" formControlName= "Id_Area" placeholder="ingrese su area">
+                        <mat-label>Area</mat-label>
+                        <mat-select formControlName= "Area">
+                          <mat-option *ngFor="let area of Areas" [value]="area.value">
+                            {{area.viewValue}}
+                          </mat-option>
+                        </mat-select>
                 </mat-form-field>
                 </p>
             <div class="card-action">

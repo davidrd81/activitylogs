@@ -5,6 +5,10 @@ import { Operator } from 'src/app/models/operator';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 declare let M: any;
+interface Area {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-formoperator',
@@ -15,8 +19,13 @@ declare let M: any;
 })
 export class FormoperatorComponent implements OnInit {
   inputData: Operator;
+  Areas: Area[] = [
+    {value: '1', viewValue: 'Banitsmo'},
+    {value: '2', viewValue: 'Iseries'},
+    {value: '3', viewValue: 'Respaldos'}
+  ];
   operatorForm = this.fb.group({
-    CC: [0, Validators.required],
+    CC: [, Validators.required],
     FirstName: ['', Validators.required],
     LastName: ['', Validators.required],
     Email: ['', Validators.required],
@@ -32,7 +41,7 @@ export class FormoperatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputData = this.data['operator'];
-    console.log(this.inputData);
+    console.log('inicio de formulario', this.inputData);
     this.operatorForm.patchValue(this.inputData);
   }
 

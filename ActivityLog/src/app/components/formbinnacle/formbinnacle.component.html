@@ -1,35 +1,50 @@
 <div class="container">
     <div class="row">
-        <form #binnacleForm="ngForm" (ngSubmit)="addBinnacle(binnacleForm)">
-            <div>
-                <div>
-                    <input type="hidden" name="Id" #Id="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id" placeholder="ingrese su cedula">
-                </div>
-                <div>
-                    <input type="number" name="Id_LastOperator" #Id_LastOperator="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_LastOperator" placeholder="ingrese su cedula">
-                </div>
-                <div>
-                    <input type="text" name="Id_NewOperator" #Id_NewOperator="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_NewOperator" placeholder="ingrese su nombre">
-                </div>
-                <div>
-                    <input type="text" name="News" #News="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.News" placeholder="ingrese su apellido">
-                </div>
-                <div>
-                    <input type="email" name="SpecialProcess" #SpecialProcess="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.SpecialProcess" placeholder="ingrese su email">
-                </div>
-                <div>
-                    <input type="text" name="PendingProcess" #PendingProcess="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.PendingProcess" placeholder="ingrese su nombre de usuario">
-                </div>
-                <div>
-                    <input type="text" name="Id_Schedule" #Id_Schedule="ngModel" [(ngModel)]="binnacleService.SelectedBinnacle.Id_Schedule" placeholder="ingrese su area">
-                </div>
-            </div>
+        <form appearance="outline" [formGroup]="binnacleForm" (ngSubmit)="addBinnacle()">
+            <mat-form-field>
+                <mat-label>OPERADOR QUE ENTREGA</mat-label>
+                <mat-select formControlName= "Id_NewOperator">
+                    <mat-option *ngFor="let NewO of SelectOperator" [value]="NewO.value">
+                      {{NewO.viewValue}}
+                    </mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>OPERADOR QUE RECIBE</mat-label>
+                <mat-select formControlName= "Id_LastOperator">
+                    <mat-option *ngFor="let LastO of SelectOperator" [value]="LastO.value">
+                      {{LastO.viewValue}}
+                    </mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Noticias</mat-label>
+                <textarea matInput formControlName="News" placeholder="NOTICIAS"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Procesos Especiales</mat-label>
+                <textarea matInput type="email" formControlName="SpecialProcess" placeholder="QUE REQUERIMIENTO MERECE LA ATENCION">
+                </textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Procesos Pendientes</mat-label>
+                <textarea matInput type="text" formControlName="PendingProcess" placeholder="¿ALGO PENDIENTE?"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Turno</mat-label>
+                <mat-select formControlName= "Id_Schedule">
+                  <mat-option *ngFor="let Schedule of Schedules" [value]="Schedule.value">
+                    {{Schedule.viewValue}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
             <div class="card-action">
                 <div class="input-field-append">
-                    <button class="btn-primary btn">Guardar</button>
-                    <button class="btn-primary btn" (click)="resetForm(binnacleForm)">Limpiar</button>
+                    <button mat-flat-button type="submit" color="primary">Guardar</button>
+                    <button mat-flat-button type="submit" color="primary" (click)="resetForm()">Limpiar</button>
                 </div>
         </div>
         </form>
+        <button mat-flat-button (click)="onNoClick()" color="primary">cerrar registro</button>
     </div>
 </div>
