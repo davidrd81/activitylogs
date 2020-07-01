@@ -16,6 +16,8 @@ app.use(cors({origin: 'http://localhost:4200'}));
 //Routes
 app.use(require('./routes/binnacle_r'));
 app.use(require('./routes/operator_r'));
+app.use(require('./routes/schedule_r'));
+app.use(require('./routes/area_r'));
 
 // Starting server
 app.listen(app.get('port'), () => {

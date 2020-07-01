@@ -22,6 +22,11 @@ export class BinnacleService {SelectedBinnacle: Binnacle;
     return this.http.get(this.URL_API + `/${Id}`);
   }
 
+  BinnacleById(Id: number) {
+    console.log(this.http.get(this.URL_API + `/edit/${Id}`));
+    return this.http.get(this.URL_API + `/edit/${Id}`);
+  }
+
   postBinnacle(Binnacles: Binnacle) {
     console.log('servicios', Binnacles);
     return this.http.post(this.URL_API, Binnacles);

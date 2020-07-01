@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 // Angular Material
-import { MaterialModule } from './material.module'
+import { MaterialModule } from './material.module';
 
 // RUTAS
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,9 @@ import { HeaderComponent } from './components/header/header.component';
 // servicios
 import { OperatorService } from './services/operator.service';
 import { BinnacleService } from './services/Binnacle.service';
+import { ScheduleService } from './services/schedule.service';
+import { AreaService } from './services/area.service';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormbinnacleComponent } from './components/formbinnacle/formbinnacle.component';
 import { FormoperatorComponent } from './components/formoperator/formoperator.component';
@@ -47,7 +50,7 @@ import { FormoperatorComponent } from './components/formoperator/formoperator.co
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' },
-    OperatorService, BinnacleService,
+    OperatorService, BinnacleService, ScheduleService, AreaService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'auto', appearance: 'outline'} },
     ],
   bootstrap: [AppComponent],

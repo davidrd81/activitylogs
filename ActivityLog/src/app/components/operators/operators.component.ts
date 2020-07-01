@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { OperatorService } from '../../services/operator.service';
 import { Operator } from 'src/app/models/operator';
-import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FormoperatorComponent } from '../formoperator/formoperator.component';
+import { AreaService } from '../../services/area.service';
 
 declare var M: any;
 
@@ -11,7 +11,7 @@ declare var M: any;
   selector: 'app-operators',
   templateUrl: './operators.component.html',
   styleUrls: ['./operators.component.css'],
-  providers: [OperatorService],
+  providers: [OperatorService, AreaService],
 
 })
 export class OperatorsComponent implements OnInit {
@@ -20,6 +20,7 @@ export class OperatorsComponent implements OnInit {
     dataSource: Operator;
   constructor(
     public operatorService: OperatorService,
+    public areaService: AreaService,
     private dialog: MatDialog,
     ) {}
   ngOnInit() {
@@ -40,13 +41,9 @@ export class OperatorsComponent implements OnInit {
     this.operatorService.getOperator()
     .subscribe(res => {
       this.operatorService.Operator = res as Operator[];
-      console.log(res);
     });
   }
 
-/*  editOperator(operator: Operator) {
-    this.operatorService.SelectedOperator = operator;
-} */
   editOperator(operator: Operator): void {
     const dialogRef = this.dialog.open(FormoperatorComponent, {
       width: '350px',
@@ -54,6 +51,7 @@ export class OperatorsComponent implements OnInit {
       data: {operator},
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.getOperator();
       console.log('The dialog was closed');
     });
   }
@@ -62,9 +60,10 @@ export class OperatorsComponent implements OnInit {
   deleteOperator(Id: number) {
     if (confirm ('are you sure you want to delete it?')) {
       this.operatorService.deleteOperator(Id)
-  .subscribe(res => {
+      .subscribe(res => {
       this.getOperator();
-    });
+      });
+    }
   }
-}
+
 }

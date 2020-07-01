@@ -1,8 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BinnacleService } from '../../services/binnacle.service';
-import { Binnacle } from 'src/app/models/binnacle';
+import { OperatorService } from '../../services/operator.service';
+import { ScheduleService } from '../../services/schedule.service';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+// modelos
+import { Binnacle } from 'src/app/models/binnacle';
+import { Operator } from 'src/app/models/operator';
+import { ClassSchedule } from 'src/app/models/schedule';
 
 // declaracion de variables
 declare let M: any;
@@ -19,27 +25,10 @@ interface Schedule {
   selector: 'app-formbinnacle',
   templateUrl: './formbinnacle.component.html',
   styleUrls: ['./formbinnacle.component.css'],
-  providers: [BinnacleService],
+  providers: [BinnacleService, OperatorService, ScheduleService],
 })
-export class FormbinnacleComponent implements OnInit {
-    // select ultimo operador
-    SelectOperator: IfOperator[] = [
-      {value: '2', viewValue: 'DAVID RODRIGUEZ'},
-      {value: '3', viewValue: 'JUAN PEREZ'},
-      {value: '4', viewValue: 'LUIS LEMUS'},
-      {value: '5', viewValue: 'JACOB GAMBOA'},
-      {value: '1027', viewValue: 'ANDRES CANO'},
-    ];
 
-  // select area
-  Schedules: Schedule[] = [
-    {value: '1', viewValue: '06:00 a 14:00'},
-    {value: '2', viewValue: '14:00 a 22:00'},
-    {value: '3', viewValue: '22:00 a 06:00'},
-    {value: '4', viewValue: '06:00 a 18:00'},
-    {value: '5', viewValue: '18:00 a 06:00'},
-    {value: '6', viewValue: '08:00 a 18:00'},
-  ];
+export class FormbinnacleComponent implements OnInit {
 
   // formulario
   binnacleForm = this.fb.group({
@@ -53,6 +42,8 @@ export class FormbinnacleComponent implements OnInit {
   inputData: Binnacle;
   constructor(
     public binnacleService: BinnacleService,
+    public operatorService: OperatorService,
+    public scheduleService: ScheduleService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FormbinnacleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Binnacle,
@@ -60,25 +51,11 @@ export class FormbinnacleComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputData = this.data['binnacle'];
-    console.log(this.inputData);
-    this.binnacleForm.patchValue(this.inputData);
+    this.BinnacleById(this.inputData.Id);
+    this.getOperator();
+    this.getSchedule();
   }
-/*
-  addBinnacle(form?: NgForm) {
-    if (form.value.Id) {
-      this.binnacleService.putBinnacle(form.value)
-      .subscribe(res => {console.log(res);
-      }); 
-    } else {
-      this.binnacleService.postBinnacle(form.value)
-        .subscribe(res => {
-          this.resetForm(form);
-          M.toast({html: 'save succesfully'});
-          this.getBinnacle();
-        });
-        }
-  }
-  */
+
 
   addBinnacle() {
     if (this.inputData.Id) {
@@ -88,34 +65,43 @@ export class FormbinnacleComponent implements OnInit {
       .subscribe(res => {console.log(res),
         M.toast({html: 'save succesfully'});
       });
-      } else {
-        this.binnacleService.postBinnacle(this.binnacleForm.value)
-        .subscribe(res => {
-//          this.resetForm(this.operatorForm.value);
-          M.toast({html: 'save succesfully'});
-//          this.getOperator();
-        });
-      }
+    } else {
+      this.binnacleService.postBinnacle(this.binnacleForm.value)
+      .subscribe(res => {
+        this.binnacleForm.reset();
+        M.toast({html: 'save succesfully'});
+        this.onNoClick();
+      });
     }
+  }
 
-  getBinnacle() {
-    this.binnacleService.getBinnacle()
-    .subscribe(res => {
-      this.binnacleService.Binnacle = res as Binnacle[];
-      console.log(res);
+  BinnacleById(Id: number) {
+  this.binnacleService.BinnacleById(Id)
+  .subscribe(res => {
+    const binnacleForm = res[0] as Binnacle[];
+    this.binnacleForm.patchValue(binnacleForm);
+    console.log(this.binnacleForm);
     });
   }
 
-resetForm(form?: NgForm) {
-    if (form) {
-      form.reset();
-      this.binnacleService.SelectedBinnacle = new Binnacle();
-    }
+  editBinnacle(binnacle: Binnacle) {
+      this.binnacleService.SelectedBinnacle = binnacle;
   }
 
-editBinnacle(binnacle: Binnacle) {
-    this.binnacleService.SelectedBinnacle = binnacle;
+  getOperator() {
+    this.operatorService.getOperator()
+    .subscribe(res => {
+      this.operatorService.Operator = res as Operator[];
+    });
   }
+
+  getSchedule() {
+    this.scheduleService.getSchedule()
+    .subscribe(res => {
+      this.scheduleService.Schedule = res as ClassSchedule[];
+    });
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

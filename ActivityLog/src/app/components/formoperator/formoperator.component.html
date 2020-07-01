@@ -32,9 +32,9 @@
                 <p>
                     <mat-form-field>
                         <mat-label>Area</mat-label>
-                        <mat-select formControlName= "Area">
-                          <mat-option *ngFor="let area of Areas" [value]="area.value">
-                            {{area.viewValue}}
+                        <mat-select formControlName= "Id_Area">
+                          <mat-option *ngFor="let area of areaService.Area" [value]="area.Id">
+                            {{area.Area}}
                           </mat-option>
                         </mat-select>
                 </mat-form-field>
@@ -42,7 +42,6 @@
             <div class="card-action">
                 <div>
                     <button mat-flat-button type="submit" color="primary">Guardar</button>
-                    <button mat-flat-button color="primary" class="btn-primary btn" (click)="resetForm()">Limpiar</button>
                 </div>
             </div>
         </form>

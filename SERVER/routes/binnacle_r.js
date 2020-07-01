@@ -5,6 +5,7 @@ const binnacle = require('../controllers/binnacle.controller');
 
 router.get('/api/binnacles', binnacle.getBinnacle);
 router.get('/api/binnacles/:id', binnacle.getBinnacleById);
+router.get('/api/binnacles/edit/:id', binnacle.getBinnacleByIdDos);
 router.post('/api/binnacles', binnacle.createBinnacle );
 router.put('/api/binnacles/:id', binnacle.editBinnacle);
 router.delete('/api/binnacles/:id', binnacle.deleteBinnacleById);

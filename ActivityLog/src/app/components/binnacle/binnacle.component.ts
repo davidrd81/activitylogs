@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BinnacleService } from '../../services/binnacle.service';
 import { Binnacle } from 'src/app/models/binnacle';
-import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FormbinnacleComponent } from '../formbinnacle/formbinnacle.component';
+import { MatTable } from '@angular/material/table';
 
 declare var M: any;
 
@@ -17,6 +18,7 @@ export class BinnacleComponent implements OnInit {
   // TABLA
   displayedColumns: string[] = ['operador', 'Schedule', 'News', 'SpecialProcess', 'PendingProcess', 'bottom_edit', 'bottom_delete'];
   dataSource: Binnacle;
+  @ViewChild(MatTable) table: MatTable<Binnacle>;
   constructor(
     public binnacleService: BinnacleService,
     private dialog: MatDialog,
@@ -32,40 +34,19 @@ export class BinnacleComponent implements OnInit {
       data: {binnacle: Binnacle},
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log(result);
+      this.binnacleService.Binnacle = this.binnacleService.Binnacle.concat([]);
+      this.table.renderRows();
     });
   }
 
-addBinnacle(form?: NgForm) {
-    if (form.value.Id) {
-      this.binnacleService.putBinnacle(form.value)
-      .subscribe(res => {console.log(res);
+  getBinnacle() {
+      this.binnacleService.getBinnacle()
+      .subscribe(res => {
+        this.binnacleService.Binnacle = res as Binnacle[];
+        console.log(res);
       });
-    } else {
-      this.binnacleService.postBinnacle(form.value)
-        .subscribe(res => {
-          this.resetForm(form);
-          M.toast({html: 'save succesfully'});
-          this.getBinnacle();
-        });
-        }
-  }
-
-getBinnacle() {
-    this.binnacleService.getBinnacle()
-    .subscribe(res => {
-      this.binnacleService.Binnacle = res as Binnacle[];
-      console.log(res);
-    });
-  }
-
-resetForm(form?: NgForm) {
-    if (form) {
-      form.reset();
-      this.binnacleService.SelectedBinnacle = new Binnacle();
     }
-  }
-
 
   editBinnacle(binnacle: Binnacle): void {
     const dialogRef = this.dialog.open(FormbinnacleComponent, {
@@ -75,16 +56,18 @@ resetForm(form?: NgForm) {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      console.log(result);
+      this.getBinnacle();
     });
   }
 
-// tslint:disable-next-line: variable-name
+  // tslint:disable-next-line: variable-name
   deleteBinnacle(Id: number) {
     if (confirm ('are you sure you want to delete it?')) {
       this.binnacleService.deleteBinnacle(Id)
       .subscribe(res => {
       this.getBinnacle();
     });
-  }
+    }
   }
 }

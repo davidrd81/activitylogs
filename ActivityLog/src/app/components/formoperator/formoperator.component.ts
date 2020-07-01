@@ -1,29 +1,23 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NgForm, FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder, Validators} from '@angular/forms';
 import { OperatorService } from '../../services/operator.service';
 import { Operator } from 'src/app/models/operator';
+import { AreaService } from '../../services/area.service';
+import { ClassArea } from 'src/app/models/area';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 declare let M: any;
-interface Area {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-formoperator',
   templateUrl: './formoperator.component.html',
   styleUrls: ['./formoperator.component.css'],
-  providers: [OperatorService],
+  providers: [OperatorService, AreaService],
 
 })
 export class FormoperatorComponent implements OnInit {
   inputData: Operator;
-  Areas: Area[] = [
-    {value: '1', viewValue: 'Banitsmo'},
-    {value: '2', viewValue: 'Iseries'},
-    {value: '3', viewValue: 'Respaldos'}
-  ];
+
   operatorForm = this.fb.group({
     CC: [, Validators.required],
     FirstName: ['', Validators.required],
@@ -34,6 +28,7 @@ export class FormoperatorComponent implements OnInit {
   });
   constructor(
     public operatorService: OperatorService,
+    public areaService: AreaService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FormoperatorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Operator,
@@ -43,39 +38,45 @@ export class FormoperatorComponent implements OnInit {
     this.inputData = this.data['operator'];
     console.log('inicio de formulario', this.inputData);
     this.operatorForm.patchValue(this.inputData);
+    this.getArea();
   }
 
   updateOperator() {
     if (this.inputData.Id) {
       this.operatorForm.value['Id'] = this.inputData.Id;
-      console.log('ingreso en el if', this.operatorForm.value  ),
+      console.log('ingreso en el if', this.operatorForm.value),
       this.operatorService.putOperator(this.operatorForm.value)
-      .subscribe(res => {console.log(res),
-        M.toast({html: 'save succesfully'});
-      });
-      } else {
-        this.operatorService.postOperator(this.operatorForm.value)
-        .subscribe(res => {
-//          this.resetForm(this.operatorForm.value);
-          M.toast({html: 'save succesfully'});
-//          this.getOperator();
-        });
-      }
-    }
-    getOperator() {
-      this.operatorService.getOperator()
       .subscribe(res => {
-        this.operatorService.Operator = res as Operator[];
         console.log(res);
+        M.toast({html: 'save succesfully'});
+        this.getOperator();
+      });
+    } else {
+      this.operatorService.postOperator(this.operatorForm.value)
+      .subscribe(res => {
+        M.toast({html: 'save succesfully'});
+        this.getOperator();
       });
     }
-    resetForm(form?: NgForm) {
-      if (form) {
-        form.reset();
-        this.operatorService.SelectedOperator = new Operator();
-      }
-    }
-    onNoClick(): void {
-      this.dialogRef.close();
-    }
+  }
+
+  getOperator() {
+    this.operatorService.getOperator()
+    .subscribe(res => {
+      this.operatorService.Operator = res as Operator[];
+      console.log(res);
+    });
+  }
+
+  getArea() {
+    this.areaService.getArea()
+    .subscribe(res => {
+      this.areaService.Area = res as ClassArea[];
+      console.log(res);
+    });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

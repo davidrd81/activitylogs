@@ -19,6 +19,15 @@ const getBinnacle = (req, res) => {
         executeSP (res, query)
 };
 
+//GET API Stored Procedure GetAllBinnacleDos
+const getBinnacleByIdDos = async (req, res) => {
+    const {id} = req.params;
+    const request = new sql.Request();
+    request.input('BinnacleId', sql.Int, id);
+    const result = await request.execute('SP_GetBinnacleByIdDos');
+        res.json(result.recordset); // Result in JSON format
+};
+
 //GET API by Id
 const getBinnacleById = async (req, res) => {
     const {id} = req.params;
@@ -78,5 +87,6 @@ module.exports = {
     getBinnacleById,
     createBinnacle,
     editBinnacle,
-    deleteBinnacleById
+    deleteBinnacleById,
+    getBinnacleByIdDos
 }
