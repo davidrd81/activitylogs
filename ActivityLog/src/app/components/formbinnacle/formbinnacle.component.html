@@ -3,8 +3,8 @@
         <form appearance="outline" [formGroup]="binnacleForm" (ngSubmit)="addBinnacle()">
             <mat-form-field>
                 <mat-label>OPERADOR QUE ENTREGA</mat-label>
-                <mat-select formControlName= "Id_LastOperator">
-                  <mat-option *ngFor="let LastO of operatorService.Operator" [value]="LastO.Id">
+                <mat-select formControlName = "Id_LastOperator" (selectionChange)="onSelect($event.value)">
+                  <mat-option *ngFor="let LastO of operatorService.Operator" [value]="LastO.Id" >
                     {{LastO.FirstName}} {{LastO.LastName}}
                     </mat-option>
                   </mat-select>
@@ -12,7 +12,7 @@
             <mat-form-field>
                 <mat-label>OPERADOR QUE RECIBE</mat-label>
                 <mat-select formControlName= "Id_NewOperator">
-                  <mat-option *ngFor="let NewO of operatorService.Operator" [value]="NewO.Id">
+                  <mat-option *ngFor="let NewO of operatorService.Operator" [value]="NewO.Id" [disabled]="NewO.Id == disableSelect">
                     {{NewO.FirstName}} {{NewO.LastName}}
                     </mat-option>
                   </mat-select>

@@ -1,15 +1,33 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="mat-elevation-z6" _nghost-vmt-c48="">
   <mat-toolbar-row>
     <button mat-icon-button>
       <mat-icon>menu</mat-icon>
     </button>
     <h1>Activity Logs</h1>
     <span class="menu-spacer"></span>
-    <div>
+    <mat-toolbar-row>
       <span class="example-spacer"></span>
-      <a class="accesos" [routerLink]="['home']">HOME</a>
-      <a class="accesos" [routerLink]="['binnacle']">BITACORA</a>
-      <a class="accesos" [routerLink]="['operators']">operators</a>
-    </div>
+      <a mat-button="" [routerLink]="['home']" aria-label="Angular Material" class="mat-focus-indicator docs-button mat-button mat-button-base" tabindex="0" aria-disabled="false" >
+        <span class="mat-button-wrapper">
+          <span _ngcontent-vmt-c48="">HOME</span>
+        </span>
+        <div matripple="" class="mat-ripple mat-button-ripple"></div>
+        <div class="mat-button-focus-overlay"></div>
+      </a>
+      <a mat-button="" [routerLink]="['binnacle']" aria-label="Angular Material" class="mat-focus-indicator docs-button mat-button mat-button-base" tabindex="1" aria-disabled="false" >
+        <span class="mat-button-wrapper">
+          <span _ngcontent-vmt-c48="">BITACORA</span>
+        </span>
+        <div matripple="" class="mat-ripple mat-button-ripple"></div>
+        <div class="mat-button-focus-overlay"></div>
+      </a>
+      <a mat-button="" [routerLink]="['operators']" aria-label="Angular Material" class="mat-focus-indicator docs-button mat-button mat-button-base" tabindex="2" aria-disabled="false" >
+        <span class="mat-button-wrapper">
+          <span _ngcontent-vmt-c48="">OPERADORES</span>
+        </span>
+        <div matripple="" class="mat-ripple mat-button-ripple"></div>
+        <div class="mat-button-focus-overlay"></div>
+      </a>
+    </mat-toolbar-row>
   </mat-toolbar-row>
 </mat-toolbar>

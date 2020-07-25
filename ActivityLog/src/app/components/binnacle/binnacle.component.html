@@ -1,44 +1,56 @@
 
-<div><button mat-flat-button color="primary" (click)="openDialog()">CREAR BITACORA</button></div>
-    <table mat-table #table [dataSource]="binnacleService.Binnacle">
-        <ng-container matColumnDef='operador'>
-            <th mat-header-cell *matHeaderCellDef>operador</th>
+<div><button class="button-newBinnacle" mat-raised-button color="primary" (click)="openDialog()">CREAR BITACORA</button></div>
+
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Name" #input>
+    </mat-form-field>
+
+<div  class="mat-elevation-z8">
+    <table mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="operador">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>operador</th>
             <td mat-cell *matCellDef="let binnacle">{{ binnacle.FirstName[0] }} {{ binnacle.LastName[0] }}</td>
         </ng-container>
         <ng-container matColumnDef='Schedule'>
-            <th mat-header-cell *matHeaderCellDef>Turno</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Turno</th>
             <td mat-cell *matCellDef="let binnacle">{{ binnacle.Schedule }}</td>
         </ng-container>
         <ng-container matColumnDef='News'>
-            <th mat-header-cell *matHeaderCellDef>Noticias</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Noticias</th>
             <td mat-cell *matCellDef="let binnacle">{{ binnacle.News }}</td>
         </ng-container>
         <ng-container matColumnDef='SpecialProcess'>
-            <th mat-header-cell *matHeaderCellDef>Procesos especiales</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Procesos especiales</th>
             <td mat-cell *matCellDef="let binnacle">{{ binnacle.SpecialProcess }}</td>
         </ng-container>
         <ng-container matColumnDef='PendingProcess'>
-            <th mat-header-cell *matHeaderCellDef>Procesos pendientes</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Procesos pendientes</th>
             <td mat-cell *matCellDef="let binnacle">{{ binnacle.PendingProcess }}</td>
         </ng-container>
         <ng-container matColumnDef='bottom_edit'>
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let binnacle">
-                <a (click)="editBinnacle(binnacle)" style="cursor:pointer">
-                    <i class="material-icons">edit</i>
-                </a>
+                <button mat-mini-fab color="primary" (click)="editBinnacle(binnacle)" aria-label="icon button with a edit icon">
+                    <mat-icon>edit</mat-icon>
+                </button>
             </td>
         </ng-container>
         <ng-container matColumnDef='bottom_delete'>
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let binnacle">
-                <a (click)="deleteBinnacle(binnacle.Id)" style="cursor:pointer">
-                    <i class="material-icons uk-icon-hand-pointer-o">delete</i>
-                </a>
+                <button mat-mini-fab color="primary" (click)="deleteBinnacle(binnacle.Id)" aria-label="icon button with a delete icon">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </td>
         </ng-container>
-        <tbody>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </tbody>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+             <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

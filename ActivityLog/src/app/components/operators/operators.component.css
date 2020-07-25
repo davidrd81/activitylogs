@@ -1,3 +1,12 @@
 table {
-    width: 90%;
+    width: 100%;
   }
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.button-editBinnacle {
+  margin: 5px;
+}

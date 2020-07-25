@@ -1,7 +1,7 @@
 <div>
-        <button mat-raised-button (click)="openDialog()">registrar operador</button>
+        <button mat-raised-button color="primary" class="button-editBinnacle" (click)="openDialog()">registrar operador</button>
 </div>
-<div>
+<div class="mat-elevation-z8">
 <table mat-table [dataSource]="operatorService.Operator">
     <ng-container matColumnDef="CC">
         <th mat-header-cell *matHeaderCellDef>CC</th>
@@ -23,22 +23,22 @@
         <th mat-header-cell *matHeaderCellDef>UserName</th>
         <td mat-cell *matCellDef="let operator">{{ operator.UserName }}</td>
     </ng-container>
-    <ng-container matColumnDef="bottom_edit">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <ng-container matColumnDef='bottom_edit'>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let operator">
-        <a (click)="editOperator(operator)" style="cursor:pointer">
-            <i class="material-icons">edit</i>
-        </a>
-    </td>
-</ng-container>
-    <ng-container matColumnDef="bottom_delete">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <button mat-mini-fab color="primary" (click)="editOperator(operator)" aria-label="icon button with a edit icon">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef='bottom_delete'>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let operator">
-        <a (click)="deleteOperator(operator.Id)" style="cursor:pointer">
-            <i class="material-icons uk-icon-hand-pointer-o">delete</i>
-        </a>
-    </td>
-</ng-container>
+            <button mat-mini-fab color="primary" (click)="deleteOperator(operator.Id)" aria-label="icon button with a delete icon">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
     <tbody>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

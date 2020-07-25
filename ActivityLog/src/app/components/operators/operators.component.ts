@@ -33,6 +33,7 @@ export class OperatorsComponent implements OnInit {
         data: {operator: Operator},
       });
       dialogRef.afterClosed().subscribe(result => {
+        this.getOperator();
         console.log('The dialog was closed');
       });
     }

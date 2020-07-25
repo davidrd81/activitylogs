@@ -33,13 +33,14 @@ export class FormbinnacleComponent implements OnInit {
   // formulario
   binnacleForm = this.fb.group({
     Id_LastOperator: [0, Validators.required],
-    Id_NewOperator: ['', Validators.required],
+    Id_NewOperator: [0, Validators.required],
     News: ['', Validators.required],
     SpecialProcess: ['', Validators.required],
     PendingProcess: ['', Validators.required],
     Id_Schedule: [0, Validators.required],
   });
   inputData: Binnacle;
+  disableSelect: any;
   constructor(
     public binnacleService: BinnacleService,
     public operatorService: OperatorService,
@@ -52,6 +53,8 @@ export class FormbinnacleComponent implements OnInit {
   ngOnInit(): void {
     this.inputData = this.data['binnacle'];
     this.BinnacleById(this.inputData.Id);
+    this.binnacleForm.get('Id_NewOperator').valueChanges
+    .subscribe(res => {console.log('value has changed. The new NewOperator value is:' + res)});
     this.getOperator();
     this.getSchedule();
   }
@@ -104,6 +107,11 @@ export class FormbinnacleComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  onSelect(optionSelect) {
+    console.log('value has changed. The new LastOperator value is:' + optionSelect);
+    this.disableSelect = this.binnacleForm.value['Id_LastOperator'];
   }
 
 }
